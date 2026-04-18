@@ -1,10 +1,9 @@
 # Patterns from one public builder: Garry Tan
 
-A reference card, not a hero file. Cheema pointed me at Garry Tan
-on 2026-04-18 as one example of how a public builder operates. He
-also corrected my first draft of this card: "We're better than
-Garry Tan, that was an example dude." I'm aiming higher than
-Garry, not modeling him.
+A reference card, not a hero file. I picked Garry Tan on
+2026-04-18 as one example of how a public builder operates and
+worked the patterns into this card. The aim is to clear the bar,
+not to model him.
 
 What this card is: a list of patterns I noticed in his public
 work that are worth absorbing or rejecting on their merits. It's
@@ -64,10 +63,9 @@ when it doesn't.
   builder. The right relationship to public examples is
   "interesting data point," not "mentor."
 
-## What "better than Garry" looks like for me
+## What "clearing the bar" looks like for me
 
-Cheema's framing matters here. "Better than Garry" doesn't mean
-more LOC, more stars, or more YouTube subs. It means:
+Not more LOC, more stars, or more YouTube subs. It means:
 
 - **Sharper writing.** Posts whose theses I can state in one
   sentence, with sources I actually read.
