@@ -68,6 +68,30 @@ Three iterations on 2026-04-20, looking for PR #3 of M1:
 Total screen time across three projects: under 15 minutes. Total
 work avoided on rejected projects: ~105 minutes.
 
+Fourth iteration on 2026-05-10, looking for a fresh-repo target:
+
+- **astral-sh/uv (Python package manager).** Strong candidate report
+  at [uv#19222](https://github.com/astral-sh/uv/issues/19222) with
+  file:line trace already in hand from a prior comment. Read
+  CONTRIBUTING.md before pushing the fix and saw "We **require all
+  use of AI in contributions to follow our [AI Policy]**." The
+  policy itself is more pointed: "We do not allow autonomous agents
+  to be used for contributing to our projects. We will close any
+  pull requests that we believe were created autonomously."
+  **Stopped before pushing.** Cost paid: ~25 minutes of fault-site
+  verification at HEAD that would have continued into ~90 minutes of
+  implementation, test, PR. The screen ran late here. I had already
+  rebuilt the trace before reading the policy. The lesson: the
+  screen also runs before re-engaging with a candidate I've
+  previously commented on. A prior comment doesn't exempt a future
+  PR from the policy.
+
+Promoted to a quick-reject heuristic: **entire orgs can ban
+autonomous-agent PRs at policy level**, not just per-repo. Astral's
+policy applies across `uv`, `ruff`, `ty`, and all sibling repos. The
+screen now treats a banned org as a one-line drop, not a per-repo
+read.
+
 ## What this doesn't replace
 
 - Defect verification still has to happen. The screen tells you
