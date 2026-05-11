@@ -182,6 +182,11 @@ completion files don't have siblings. The pattern doesn't apply.
   to CLI tools. Same diagnostic outcomes, same framing rule.
 - [Search before you trace][1] is the move that runs before
   this one. Existing-PR check first, sibling-read second.
+- [The wrap is the caller](the-wrap-is-the-caller.md) is the
+  in-shell follow-on: once the sibling read says zsh has an
+  IIFE-wrapped script but bash and fish don't, the wrap shape
+  itself is the next thing to check for caller-identity
+  collisions.
 
 ## Revisit
 
