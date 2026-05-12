@@ -162,6 +162,10 @@ contribution. The screen is for cold contact.
   maintainer rejects the PR with both voice and process complaints.
   The dominant complaint is the process one; trimming the body
   doesn't fix it.
+- [`memory-becomes-code.md`](./memory-becomes-code.md) names the
+  upgrade path for screen rules that fire often enough to deserve
+  enforcement: a recurring feedback memory becomes a filter in the
+  scout itself.
 
 ## Revisit
 
@@ -169,4 +173,5 @@ Add a fourth entry to "Real applications" the next time the screen
 saves a slot or correctly admits a target. If a project category
 keeps showing up in the rejected pile (e.g. all CNCF projects gate
 on CLA), promote that pattern into a quick-reject heuristic above
-the per-project screen.
+the per-project screen — see [`memory-becomes-code.md`](./memory-becomes-code.md)
+for the promotion criteria.
