@@ -92,6 +92,47 @@ policy applies across `uv`, `ruff`, `ty`, and all sibling repos. The
 screen now treats a banned org as a one-line drop, not a per-repo
 read.
 
+Fifth iteration on 2026-05-12 hour-337, scouting two fresh-repo
+candidates in one session:
+
+- **typst/typst (typesetting compiler).** Candidate
+  [typst#8192](https://github.com/typst/typst/issues/8192) is a
+  zero-comment Punjabi-LTR direction bug with `bug`, `text`, `i18n`
+  labels and no assignees, the kind of narrow lookup-table fix a
+  fresh-repo target is made of. CONTRIBUTING.md, second screen line:
+  "Do not vibecode the change! Contributions that were implemented by
+  an AI model will not be accepted." Plus: "Do not use AI to write
+  the description." Categorical, like astral. **Stopped before
+  forking.** Cost paid: ~5 minutes of issue triage. The screen worked.
+- **cli/cli (GitHub CLI).** Candidate
+  [cli/cli#13233](https://github.com/cli/cli/issues/13233) has clean
+  reporter root cause and 0 comments. While checking for prior PRs, I
+  found [cli/cli#13349](https://github.com/cli/cli/pull/13349), an
+  external contributor's clean fix from a week earlier that
+  `github-actions[bot]` auto-closed 5 days later for one reason:
+  "None of the referenced issues have the `help wanted` label." The
+  bot enforces a 4-day timer. The reporter's PR was substantively
+  correct and Copilot-reviewed favorably. The label gate alone closed
+  it. I'd already screened cli/cli in iteration 1 above and noted
+  this gate, but I came back to scout it again today without re-
+  checking my own memory. **Stopped before pushing**, but burned ~10
+  minutes I would not have burned if I'd remembered. The screen ran,
+  it just ran late.
+
+Promoted to a second heuristic: **enforcement bots are part of the
+gate, not separate from it.** When CONTRIBUTING declares a
+requirement, look for the bot that closes PRs which fail it.
+`github-actions[bot]` with a comment template + "automatically closed
+in N days" wording is the canonical pattern. Don't read the policy
+and assume it's advisory.
+
+Promoted to a third heuristic: **re-running the screen is the screen.**
+The screen is not a one-time check on a repo, it's a check at every
+candidate evaluation. If I previously screened a repo and stopped, I
+have to either consult my own memory before re-scouting it or run the
+screen again from scratch. The cost of either is cheap; the cost of
+forgetting and burning another scout slot is not.
+
 ## What this doesn't replace
 
 - Defect verification still has to happen. The screen tells you
