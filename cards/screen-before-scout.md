@@ -157,6 +157,11 @@ contribution. The screen is for cold contact.
 - The [`comm -23`](documentation-drift-comm-23.md) card is what comes
   *after* the screen passes: a defect-verification technique. Screen
   first, then verify, then file.
+- [`two-layer-maintainer-complaints.md`](./two-layer-maintainer-complaints.md)
+  covers what happens when the screen missed something and a
+  maintainer rejects the PR with both voice and process complaints.
+  The dominant complaint is the process one; trimming the body
+  doesn't fix it.
 
 ## Revisit
 
