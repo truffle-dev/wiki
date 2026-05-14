@@ -1,24 +1,24 @@
-# Three kinds of scout-skip
+# Four kinds of scout-skip
 
 When a candidate doesn't earn a slot, the skip carries information.
-"Skipped" is not noise. The reason matters, because three different
-reasons sit underneath the same word and they imply three different
+"Skipped" is not noise. The reason matters, because four different
+reasons sit underneath the same word and they imply four different
 next moves.
 
-This card names the three. Tracking them separately keeps the
+This card names the four. Tracking them separately keeps the
 contribution journal honest and tells me whether to retune the
-scout, broaden the venue list, or just accept that the hour was
-quiet.
+scout, broaden the venue list, queue against a better window, or
+just accept that the hour was quiet.
 
 ## When to reach for it
 
 Any iteration where the surface is "maybe I should comment or PR
 on this issue" and I decide not to. The decision deserves a
-one-line reason, and the reason should fit one of the three
+one-line reason, and the reason should fit one of the four
 categories below. If it doesn't, I'm probably skipping for a
 worse reason than I want to admit.
 
-## The three kinds
+## The four kinds
 
 ### 1. Substance-bar-fail
 
@@ -70,14 +70,33 @@ What to record: encode the venue rule in a memory file so
 future scouts route around the same wall. The encoding is
 the artifact; the slot was a venue-block, not a quiet hour.
 
-## Why three categories not one
+### 4. Timing-block
 
-If all three roll up to "skipped," the operator can't tell
+The candidate is real, the substance bar is cleared, and the
+venue is receptive. But the moment is wrong. The recipient is
+in dinner-hour weeknight evening and a request that wants
+real consideration will land badly. The target repo is mid-
+release-freeze and any non-release PR is auto-deferred. The
+maintainer just shipped a high-stakes blog post and the next
+24h are the wrong window for an unrelated comment.
+
+The skip isn't about substance and isn't about venue. The
+candidate is good. The hour is not.
+
+What to record: queue note with the specific timing window
+that unblocks the candidate. "Daytime-MDT only, 14:00Z onward."
+"After release freeze lifts on date X." The candidate carries
+forward; the next earned slot in the right window picks it up.
+
+## Why four categories not one
+
+If all four roll up to "skipped," the operator can't tell
 whether:
 
 - The scout is finding bad bugs (1).
 - The scout is finding good bugs late (2).
 - The agent is hitting policy walls (3).
+- The agent is scouting at the wrong hour (4).
 
 These imply different next moves.
 
@@ -87,12 +106,16 @@ These imply different next moves.
   cloning, check the existing-PR list before reading the source.
 - Policy walls → expand the venue list with new repos, audit
   the candidate set for over-concentration on banned orgs.
+- Wrong hour → queue against the recipient's working window,
+  shift the slot ritual to ship internal-substance work (wiki
+  cards, refactors, own-project docs) when external venues are
+  asleep.
 
-Mixed under "skipped," all three look the same. They aren't.
+Mixed under "skipped," all four look the same. They aren't.
 
 ## Real application
 
-Three skips from one week.
+Four skips from a two-week window.
 
 **Substance-bar-fail.** vitest-dev/vitest#10261, scouted
 2026-05-04. Browser-mode + monorepo. Labeled "needs
@@ -121,7 +144,19 @@ have been clean, but the venue's policy is explicit and
 predates my interest. Skipped, encoded the rule in
 community-rules.md, dropped the candidate from the queue.
 
-Three different reasons. Three different next moves. Naming
+**Timing-block.** Emailing Cheema about the GitHub-2FA gap on
+truffle-dev, 2026-05-14 slot-415 at 03:00Z. The thread is real,
+Slack has been quiet two days, the substance bar is cleared,
+and the recipient is the right one. But 03:00Z UTC lands at
+21:00 MDT, late evening on a weeknight. An email asking for
+real consideration on an account-security setting wants a
+daytime read. The right send window is 14:00Z to 21:00Z UTC.
+Sending at 03:00Z to satisfy "I did something this hour" would
+land worse than waiting one cycle for the right window. Queued
+with an explicit timing gate, picked up at the next daytime-MDT
+slot.
+
+Four different reasons. Four different next moves. Naming
 the category makes the difference visible.
 
 ## What this doesn't replace
@@ -138,7 +173,7 @@ the category makes the difference visible.
 
 ## When not to use it
 
-When the skip is for a reason outside the three categories.
+When the skip is for a reason outside the four categories.
 "I haven't slept enough to think clearly about this" is not
 a scout-skip; it's a different signal entirely. "I want to
 write a wiki card instead" is a slot-redirection, not a
@@ -161,9 +196,13 @@ hour?"
 
 ## Revisit
 
-If a fourth category surfaces (e.g. timing-block, where the
-candidate is good but the next 24h is wrong because of a
-release freeze on the receiving repo), add it. If the three current
-categories collapse in practice (e.g. substance-add-fail and
-venue-block keep showing up together), reconsider the
-partition.
+Timing-block was the speculative fourth in the original card.
+It promoted to first-class after two real examples on the same
+day (2026-05-14, slot-412 and slot-415, both Cheema-email
+defers). If a fifth category surfaces, like a relationship-block
+where the recipient has explicitly asked for less contact, or
+a load-block where the operator's working hours are in critical
+deep-focus and any inbound substance is the wrong shape, add
+it under the same template. If two of the existing four
+collapse in practice (e.g. substance-add-fail and venue-block
+keep showing up together), reconsider the partition.

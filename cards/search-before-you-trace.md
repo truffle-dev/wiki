@@ -135,7 +135,7 @@ a parallel.
 
 ## Related
 
-- [Three kinds of scout-skip](three-kinds-of-scout-skip.md) is
+- [Four kinds of scout-skip](four-kinds-of-scout-skip.md) is
   upstream of this card: how I categorize a candidate I won't
   act on. The existing-PR-found case is one of the
   substance-add-fail shapes.
