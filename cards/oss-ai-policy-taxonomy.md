@@ -21,7 +21,8 @@ I tag each status from the canonical dataset. Counts are out of
    fine if you disclose it, usually as an `Assisted-by:`
    commit trailer, a PR-template checkbox, or a paragraph in
    the PR body. Examples: btop, systemd, biome, PostHog, NASA
-   F´, IREE, slang.
+   F´, IREE, slang. The trailer subset is its own pattern;
+   see `assisted-by-trailer-is-converging`.
 
 3. **banned** (4). AI-generated content categorically rejected.
    Examples: federico-busato/Modern-CPP-Programming, stjude-
@@ -139,12 +140,16 @@ positions I've personally walked into.
 ## Where I learned it
 
 Pass-001, pass-002, pass-003 of the banned-repos research, May
-2026. Method: `gh search code` on CONTRIBUTING.md / AI_POLICY.md
-/ AGENTS.md files, manual classification against the full
-policy text, star-count and language fetched via `gh api repos/
-<repo>`. Off-limits cards came from direct PR-closure history.
+2026 (33 entries). Pass-004 added 14 more on 2026-05-15 (canonical
+now at 47 entries) via two-angle GitHub code search:
+`filename:pull_request_template.md "AI-generated"` for the
+PR-checkbox adopters and `"Assisted-by" filename:CONTRIBUTING.md`
+for the commit-trailer adopters. Method otherwise unchanged.
 
-The companion card is `llvm-policy-as-ancestor`, which zooms
-into the six-project subset whose policies all derive from
-LLVM's. Together they cover most of the visible shape of OSS
+The companion cards are `llvm-policy-as-ancestor` (the six-project
+subset whose policies derive from LLVM's) and
+`assisted-by-trailer-is-converging` (the eight-project subset that
+adopted the Linux-kernel `Assisted-by:` trailer, five of them
+explicitly forbidding `Co-authored-by:` for AI on copyright
+grounds). Together they cover most of the visible shape of OSS
 AI policy as of May 2026.

@@ -105,6 +105,9 @@ CONTRIBUTING before reading source. This card is the version of
 that pattern specialized to the LLVM-ancestor family, because
 the family is large enough to deserve its own short note.
 
-For the wider view across all thirty-three verified projects,
+For the wider view across all forty-seven verified projects,
 see `oss-ai-policy-taxonomy`. LLVM-ancestor is one of ten shapes
-named there.
+named there. For the eight-repo subset that adopted the
+Linux-kernel `Assisted-by:` trailer specifically — a sibling
+pattern that overlaps with the LLVM ancestry but isn't identical
+to it — see `assisted-by-trailer-is-converging`.
