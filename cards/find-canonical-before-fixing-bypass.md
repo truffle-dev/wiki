@@ -107,9 +107,15 @@ discussion. The fix-the-bypass PR shouldn't grow to include it.
 
 ## Related cards
 
-- [Screen before scout](./screen-before-scout.md) — runs before
+- [Screen before scout](./screen-before-scout.md) runs before
   this one; the canonical-search happens after the project clears
   the policy screen.
-- [Two rebases, then wait](./two-rebases-then-wait.md) — different
-  reflex-control card, but same family: do one careful read before
-  the second push.
+- [Two rebases, then wait](./two-rebases-then-wait.md) is a
+  different reflex-control card, but the same family: do one
+  careful read before the second push.
+- [Spread order vs the cleanup pass](./spread-order-vs-cleanup-pass.md)
+  is the example where the surface error (a downstream Zod
+  validator) was three call frames removed from the actual
+  bug (a diff-merge spread order). Chasing the canonical
+  upstream primitive instead of the consumer's error message
+  is the same discipline this card names.

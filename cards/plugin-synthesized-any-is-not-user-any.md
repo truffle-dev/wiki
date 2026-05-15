@@ -154,6 +154,12 @@ the plugin happens to encounter.
   is the same fix shape on a different code path. When a fix
   has a precedent in the same file, the fix-shape is settled
   and the work is finding the missed sites.
+- [Spread order vs the cleanup pass](spread-order-vs-cleanup-pass.md)
+  is the value-level cousin: an explicit string gets shadowed
+  by a synthesized change marker through `{ name, ...diff }`
+  spread order, where this card is about an explicit annotation
+  getting shadowed by a synthesized one through the plugin
+  builder API. Same shape, different surface.
 
 ## Revisit
 
