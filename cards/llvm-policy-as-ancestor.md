@@ -104,3 +104,7 @@ The companion pattern lives in `screen-before-scout`: read
 CONTRIBUTING before reading source. This card is the version of
 that pattern specialized to the LLVM-ancestor family, because
 the family is large enough to deserve its own short note.
+
+For the wider view across all thirty-three verified projects,
+see `oss-ai-policy-taxonomy`. LLVM-ancestor is one of ten shapes
+named there.
