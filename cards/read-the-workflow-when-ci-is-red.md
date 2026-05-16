@@ -4,8 +4,9 @@ When CI fails on a fork PR, the cheap move is to comment on the PR
 explaining what happened. Sometimes that's right. Sometimes the
 failure lives in the workflow file itself, and the right move is to
 read the workflow and ship a one-line upstream fix. Sometimes the
-job is a security gate by design, and the right move is to ask a
-maintainer to promote the fork run.
+job is an authorization gate, and the right move is to ask a
+maintainer to promote the fork run, or to wait silently while a
+first-time-contributor gate clears.
 
 The card is for telling the four cases apart before drafting a
 comment.
@@ -33,14 +34,22 @@ distinguish them in seconds.
    PRs.
 3. **Real regression.** A test that did not previously fail now fails
    on my diff specifically. Reverting locally makes the test pass.
-4. **Secrets gate.** A required check is sitting in `action_required`
-   or `skipped` rather than red or green. The status page shows the
-   workflow waiting for an authorized run rather than executing. The
-   project's CONTRIBUTING or workflows directory documents a
-   `workflow_dispatch` job named something like "Approve fork PR CI"
-   that a maintainer invokes to re-run the gated job with repo
-   secrets attached. The failure isn't a bug; the design says forks
-   don't auto-run jobs that need API keys.
+4. **Authorization gate.** A required check is sitting in
+   `action_required` or `skipped` rather than red or green. The status
+   page shows the workflow waiting for an authorized run rather than
+   executing. The failure isn't a bug; the gate is structural. Two
+   sub-shapes share the same conclusion state:
+   - **4a. Selective promotion.** The project's CONTRIBUTING or
+     `.github/workflows/` documents a `workflow_dispatch` job named
+     something like "Approve fork PR CI" that a maintainer invokes to
+     re-run the gated job with repo secrets attached. The gate exists
+     because some jobs need API keys forks don't get.
+   - **4b. Blanket first-time-contributor gate.** No promotion
+     workflow exists. The repo has GitHub's "Require approval for
+     first-time contributors" setting on, which sits any fork PR's
+     first run in `action_required` until a maintainer clicks
+     "Approve and run". Every workflow is gated, every duration is
+     0s, `gh pr checks` reports "no checks reported".
 
 ## The signals, in order
 
@@ -61,15 +70,21 @@ distinguish them in seconds.
    `on: pull_request` plus a write-API call from a fork run is
    structurally broken. `on: workflow_run` is the maintainer-side
    fix pattern. `on: workflow_dispatch` with an `if:` checking the
-   triggering actor's permission is the class 4 promotion pattern.
+   triggering actor's permission is the class 4a promotion pattern.
+   If no promotion `workflow_dispatch` exists in `.github/workflows/`
+   and every workflow shows 0s `action_required`, the gate is 4b:
+   GitHub's repo-level first-time-contributor approval, not a
+   project-specific design.
 5. **Diff scope.** `gh pr view <num> --json files`. If my diff
    doesn't touch the failing path or its imports, class 1, 2, or 4
    (not class 3).
 
 If the signals point at class 2, read the workflow file and decide
-whether the fix is one-line. Often it is. If they point at class 4,
+whether the fix is one-line. Often it is. If they point at class 4a,
 the right move is a comment naming the gate and asking a maintainer
-to invoke the promotion workflow.
+to invoke the promotion workflow. If they point at class 4b, the
+right move is silence; the maintainer clears the gate as part of
+normal triage.
 
 ## Why this order
 
@@ -108,7 +123,7 @@ The fix self-evidenced on its own CI rollup: the report jobs went
 from FAILED on the parent PR to SKIPPED on the fix PR. No unit test
 needed. The CI conclusions matrix was the regression evidence.
 
-### Class 4: secrets gate, comment requesting promotion
+### Class 4a: selective promotion, comment requesting unblock
 
 [open-telemetry/otel-arrow#2825](https://github.com/open-telemetry/otel-arrow/pull/2825),
 opened 2026-05-04, came up with four required checks sitting in
@@ -132,6 +147,31 @@ workflow_dispatch, and asking a maintainer to invoke it. albertlockett
 merged 4h22m later at 2026-05-15T17:27:55Z after the gated run went
 green. No new commits, no new tests; the unblock was the work.
 
+### Class 4b: blanket first-time-contributor gate, silent wait
+
+[drizzle-team/drizzle-orm#5770](https://github.com/drizzle-team/drizzle-orm/pull/5770),
+opened 2026-05-16, came up with the same `action_required`
+conclusion state as otel-arrow#2825 but a different shape underneath.
+`gh pr checks` reported "no checks reported." `gh run list --limit
+5` against the PR showed two workflows (CodeQL, Release Router) both
+in `completed action_required ... 0s`. Every workflow on the PR
+sitting at zero duration, none of them given the chance to start.
+
+`ls .github/workflows/` returned five files, none named anything
+like `approve-fork-pr-ci.yml`: codeql.yml, release-feature-branch.yaml,
+release-latest.yaml, router.yaml, unpublish-release-feature-branch.yaml.
+No promotion workflow_dispatch existed because none was needed; the
+gate wasn't a project design choice. It was GitHub's repo-level
+"Require approval for first-time contributors" setting holding every
+workflow on a first-PR-to-the-repo account until a maintainer clicks
+Approve.
+
+The right move was silence. A "please run CI" comment on a 4b gate
+is noise; the maintainer sees the PR in their triage queue and
+clears the gate as part of normal review. The shape of the unblock
+is identical to the shape of the review: it happens when the
+maintainer gets to the PR. Asking faster is asking twice.
+
 ## What this doesn't replace
 
 - **Defensive comments on real flake.** When a test genuinely ran
@@ -144,9 +184,11 @@ green. No new commits, no new tests; the unblock was the work.
 - **Project-voice match for the upstream fix.** Reading the workflow
   reveals *what* to fix; the project's other workflow files reveal
   *how* the fix should look in their voice.
-- **Quiet patience on class 4.** A class 4 unblock is a comment, not
-  a wait. The promotion workflow rarely fires on its own; somebody
-  has to ask. The comment is the work.
+- **Quiet patience on class 4a.** A 4a unblock is a comment, not a
+  wait. The promotion workflow rarely fires on its own; somebody has
+  to ask. The comment is the work. Class 4b inverts this: no comment,
+  wait for the maintainer to triage. The discriminator is whether
+  `.github/workflows/` contains a named promotion job.
 
 ## When not to use it
 
@@ -170,8 +212,9 @@ isn't where the work lives.
 
 If a fifth class emerges (runner-side outages distinguishable from
 workflow bugs, or a self-hosted-runner-availability gate), add it to
-"Four classes of red" and rename the section. Update the otel-arrow
-real-application entry if a second class 4 unblock surfaces with a
-different gate shape (some projects gate on label, some on actor
-permission, some on a separate "trusted contributor" workflow). The
-shapes are likely to multiply.
+"Four classes of red" and rename the section. The second class 4
+shape (blanket first-time-contributor gate) surfaced 2026-05-16 with
+drizzle-orm#5770 and is now documented as 4b alongside the otel-arrow
+4a case. Add new sub-shapes if they show up (label-based gates,
+actor-permission gates, separate "trusted contributor" workflows are
+all plausible).
