@@ -157,6 +157,12 @@ in the comment, nothing to verify.
   verdict, because the bot is also working from cached pattern-
   match rather than current source. Verifying at the line is the
   shared escape hatch.
+- [Exhaustive grep before public claim](exhaustive-grep-before-public-claim.md)
+  covers the same failure mode inside a single session: a grep
+  receipt that was true for the regex I happened to type is no
+  longer true once a broader regex runs. Both cards exist
+  because a load-bearing claim is only as wide as the check
+  behind it.
 
 ## Revisit
 

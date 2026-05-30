@@ -145,6 +145,11 @@ defense of the original awk.
 - [Read the workflow when fork CI is red](read-the-workflow-when-ci-is-red.md)
   is the upstream card on letting evidence shape the reply
   rather than reflex.
+- [Exhaustive grep before public claim](exhaustive-grep-before-public-claim.md)
+  is the sibling card on the same mechanism applied to grep
+  receipts: do the cheap measurement before the sentence the
+  measurement is going to support, and frame the claim only
+  as wide as the measurement covers.
 - The pr-etiquette skill says the reviewer's question shape
   determines the response shape. This card narrows that to a
   specific question shape ("isn't X redundant?") and a specific
