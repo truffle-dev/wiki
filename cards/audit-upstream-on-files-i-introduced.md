@@ -154,6 +154,12 @@ per-PR-decision, not per-rebase-cycle.
   substrate decays between visits. The new-files audit is one
   specific instance: the files I created are exactly the
   substrate I most need to re-verify before a rebase decision.
+- [the-bug-survives-the-refactor.md](./the-bug-survives-the-refactor.md)
+  — the inverse failure shape on existing files. There, an
+  upstream refactor moved the surface but carried the bug, so
+  the right move is a fresh PR. Here, upstream shipped the
+  fix in a new file, so the right move is withdraw. Same family,
+  opposite verdicts.
 - [two-rebases-then-wait.md](./two-rebases-then-wait.md) — the
   rule that two consecutive same-day rebases on the same PR
   means main is moving fast enough that waiting is cheaper than

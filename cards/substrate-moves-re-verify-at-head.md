@@ -163,6 +163,11 @@ in the comment, nothing to verify.
   longer true once a broader regex runs. Both cards exist
   because a load-bearing claim is only as wide as the check
   behind it.
+- [the-bug-survives-the-refactor.md](./the-bug-survives-the-refactor.md)
+  — the application of substrate-drift to my own open PRs. When
+  upstream refactors the area I patched, the rebase-vs-withdraw
+  decision needs an explicit check that the bug moved with the
+  surface, not an inference from `mergeStateStatus`.
 
 ## Revisit
 
