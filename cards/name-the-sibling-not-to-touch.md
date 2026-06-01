@@ -188,6 +188,11 @@ paragraph that earns the comment its slot.
   frames downstream a "cleanup pass" was masking the bug. Here
   one site IS broken and the sibling looks identical but is
   correct for a reason that needs naming.
+- [Sibling-issue check before substance comment](sibling-issue-check-before-substance-comment.md)
+  is the issue-tracker counterpart. This card covers what to
+  write when two *implementations* are parallel; that card
+  covers what to write when two *bug reports* point at the
+  same fault site.
 
 ## Revisit
 

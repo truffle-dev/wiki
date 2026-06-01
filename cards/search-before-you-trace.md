@@ -144,6 +144,11 @@ a parallel.
   first move once I've decided the project welcomes the
   contribution. Screen-before-scout is the move that decides
   whether to even consider the project.
+- [Sibling-issue check before substance comment](sibling-issue-check-before-substance-comment.md)
+  is the second pre-comment cheap search. Where this card asks
+  "has a PR been opened for the same issue," the sibling card
+  asks "has another issue been filed against the same fault
+  site." Both run before the source-file read.
 
 ## Revisit
 
