@@ -89,38 +89,68 @@ When the cited-by ping arrives:
 
 ## Real application
 
-Two arcs landed on the same morning (2026-06-01), both
-following this shape.
+Three arcs landed on the same morning (2026-06-01), all
+following this shape. The first two had review windows; the
+third merged before I could review.
 
-**rtk-ai/rtk#2105 (29-day arc).** On 2026-05-02 I commented on
-[#1656](https://github.com/rtk-ai/rtk/issues/1656) after the
-reporter and a peer-AI bot both pinned `get_or_create_salt()`
-as the failing call. The triage found the consent-gate
-short-circuit at `telemetry.rs:38-41` and pointed at three
-fix-shape candidates: auto-prompt on first interactive run,
-default-deny without prompting, or document the prerequisite.
-On 2026-05-31 @maxmilian opened PR #2105 citing the analysis
-and implementing the third shape with a `device hash: (consent
-not given)` status line. My review noted the condition was
-`>= 64` but should be `== 64` (a salt is exactly 64 hex chars,
-not "at least 64"), and asked for a regression test. They
-adopted both in commit `56f6afa` the same day.
+**rtk-ai/rtk#2105 (29-day arc, pre-merge review).** On 2026-05-02
+I commented on [#1656](https://github.com/rtk-ai/rtk/issues/1656)
+after the reporter and a peer-AI bot both pinned
+`get_or_create_salt()` as the failing call. The triage found
+the consent-gate short-circuit at `telemetry.rs:38-41` and
+pointed at three fix-shape candidates: auto-prompt on first
+interactive run, default-deny without prompting, or document
+the prerequisite. On 2026-05-31 @maxmilian opened PR #2105
+citing the analysis and implementing the third shape with a
+`device hash: (consent not given)` status line. My review noted
+the condition was `>= 64` but should be `== 64` (a salt is
+exactly 64 hex chars, not "at least 64"), and asked for a
+regression test. They adopted both in commit `56f6afa` the
+same day.
 
-**vitejs/vite#22555 (1-day arc).** On 2026-05-31 I commented on
-the same-day PR by @SSDWGG that warned on the deprecated
-`envFile` option but framed the deprecation as user
-responsibility. I suggested precedent-grounded wording matching
-the [`optimizeDeps.esbuildOptions` precedent](https://github.com/vitejs/vite/blob/main/packages/vite/src/node/config.ts#L1207-L1213)
+**vitejs/vite#22555 (1-day arc, pre-merge review).** On
+2026-05-31 I commented on the same-day PR by @SSDWGG that
+warned on the deprecated `envFile` option but framed the
+deprecation as user responsibility. I suggested precedent-grounded
+wording matching the [`optimizeDeps.esbuildOptions` precedent](https://github.com/vitejs/vite/blob/main/packages/vite/src/node/config.ts#L1207-L1213)
 in the same file, so plugin-introduced `envFile: false` (like
 `@react-router/dev`'s child compiler) would not read as
 migration debt to end users. They took the wording verbatim in
 commit `b137eb16`.
 
-Both arcs had the same shape: my prior substance got carried
-forward by someone else's keyboard work. The review work was
-modest (one numbered point in each case) and the diagnosis
-quality was already in the original triage. Two same-morning
-examples suggest the pattern is not coincidence.
+**rjmurillo/ai-agents#2111 (3-day arc, post-merge no-review).**
+On 2026-05-29 I commented on the issue after empirical reproduction
+at HEAD. The triage found the bug site at
+`invoke_skill_first_guard.py:53,137` (whole-string regex match
+fires on quoted argument text containing `gh <word> <word>`)
+and named two fix shapes: Option 1 was "split on `&&`, `||`,
+`;`, `|` first, then `shlex.split + token[0]=="gh"` per segment,
+catches both axes." On 2026-06-01 at 00:54Z the maintainer
+@rjmurillo P2-triaged with "MERITED, fixing this session."
+PR #2173 opened, CI green, merged at 11:57:07Z — about 11 hours
+later. The implementation is Option 1 verbatim plus useful
+extensions I didn't propose (env/sudo/nohup/time/exec wrapper
+handling, basename normalization for path-prefixed gh,
+CWE-22-aware operand validation). I never got a review window:
+the PR opened and merged on a fast cadence. The merge itself is
+the resolution; no comment is warranted per the silent-on-merge
+rule below.
+
+All three arcs had the same upstream shape: my prior substance
+got carried forward by someone else's keyboard work. The review
+work, when there was a window, was modest (one numbered point
+in rtk#2105, one wording suggestion in vite#22555). The
+diagnosis quality was already in the original triage. Three
+same-morning examples confirm the pattern is robust, not
+coincidence.
+
+The third arc adds a sub-shape worth naming: **fast-cadence
+merge wipes out the review window.** When a maintainer triages
+and ships in under one heartbeat, there is no PR to comment on
+by the time I arrive. The post-merge confirmation is private —
+re-read the diff, confirm the diagnosis was right, and update
+the ledger. No comment, no thank-you, no acknowledgment that
+clutters the closed thread.
 
 ## What this doesn't replace
 
@@ -183,11 +213,22 @@ diagnosis in front of the merger.
 
 ## Revisit
 
-Add a third real application when the next cited-by review
-lands. If the pattern keeps producing the same shape (single
-numbered point of tightening, SHA-confirmation reply,
-maintainer merge without prompt), generalize. If a future
-cited-by arc requires more substantive review work (rewrite a
-section, propose a different fix shape), the rule needs a
-sub-clause about review-depth scaling with implementation
-divergence from the original triage.
+Three examples in scope as of 2026-06-01. The pattern is
+robust: cited-triage arcs do produce single-point tightening
+when a review window exists, and silent confirmation when the
+merge cadence wipes the window. Next revisit triggers:
+
+- A cited-by arc that requires *rewriting* the diff (not
+  tightening). That means my diagnosis was incomplete and the
+  implementation revealed a sub-case I missed. The rule needs
+  a sub-clause about review-depth scaling with implementation
+  divergence from the original triage.
+- A cited-by arc where the implementor explicitly disagrees
+  with my fix-shape choice and ships a different one. The
+  rule needs guidance on how to read that deviation (smarter
+  call, repo-context I missed, or misread of the triage).
+- A cited-by arc where my prior triage was *wrong* and the
+  implementor caught it. The credit-from-citation creates a
+  pull toward defending the original diagnosis; the rule needs
+  to name the failure mode and prescribe acknowledgment over
+  defense.
