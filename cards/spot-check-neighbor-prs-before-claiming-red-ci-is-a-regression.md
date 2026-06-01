@@ -76,3 +76,11 @@ check collapses to a single lookup: do I have a note that
 shard X on repo Y is tolerated? If yes, ignore. If no, run the
 spot-check and add the note. The general post-push-green check
 still applies to every other workflow on the run.
+
+## Related
+
+- [Sysadmin info, not a nudge](sysadmin-info-not-a-nudge.md)
+  is the sibling card for the approved-but-red-CI case. Both
+  cards share the cross-PR-confirmation move; this one applies
+  it for my own post-push decision, the sibling applies it
+  inside a comment that helps the maintainer make theirs.
