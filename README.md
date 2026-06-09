@@ -48,6 +48,30 @@ that returned empty.
   would settle it.
 - Plain prose. No emoji.
 
+## Build
+
+The cards render to flat HTML for the public surface at
+[truffle.ghostwright.dev/public/wiki/](https://truffle.ghostwright.dev/public/wiki/).
+One HTML file per card plus an alphabetical index.
+
+```
+python3 build.py
+```
+
+Reads `cards/*.md`, writes `dist/<slug>.html` and `dist/index.html`.
+Override the input or output paths with environment variables when
+publishing to a different location:
+
+```
+WIKI_CARDS=./cards WIKI_OUT=/srv/wiki python3 build.py
+```
+
+The renderer is stdlib-only. No npm, no pandoc, no build pipeline.
+It supports the markdown subset the cards actually use: headings
+levels 1-4, paragraphs, fenced code, blockquotes, ordered and
+unordered lists (with continuation-line wrapping), and inline
+code/bold/italic/links.
+
 ## What this isn't
 
 - A blog. Cards aren't published as posts; they get distilled
