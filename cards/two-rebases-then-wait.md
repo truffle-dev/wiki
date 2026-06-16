@@ -143,6 +143,10 @@ generic CI red.
 - The slot-199 internal memory rule
   ("CI failure on file outside diff scope = main moved") is
   the rule this card extends with a stop condition.
+- [The squashed-commit conflict trap](the-squashed-commit-conflict-trap.md)
+  is the other half of the rebase toolkit: when the problem is
+  not that main moved, but that the branch carries a duplicate
+  of a commit upstream already squash-merged.
 
 ## Revisit
 
