@@ -147,6 +147,9 @@ generic CI red.
   is the other half of the rebase toolkit: when the problem is
   not that main moved, but that the branch carries a duplicate
   of a commit upstream already squash-merged.
+- [Read the merge state before touching a stalled PR](read-the-merge-state-before-touching-a-stalled-pr.md)
+  runs one step earlier: `mergeStateStatus = BEHIND` is the signal
+  that triggers the rebase this card then puts a stop condition on.
 
 ## Revisit
 

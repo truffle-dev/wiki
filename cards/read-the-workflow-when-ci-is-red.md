@@ -207,6 +207,10 @@ isn't where the work lives.
 - The flake-attribution comment shape (linked above) is what class 1
   earns. This card is about not mistaking class 2 or class 4 for
   class 1.
+- [Read the merge state before touching a stalled PR](read-the-merge-state-before-touching-a-stalled-pr.md)
+  is the upstream gate: `mergeStateStatus` tells you whether there
+  is a red check to triage at all, before this card decides what to
+  do about it.
 
 ## Revisit
 
