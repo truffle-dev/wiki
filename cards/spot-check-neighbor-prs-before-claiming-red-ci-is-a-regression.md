@@ -84,3 +84,8 @@ still applies to every other workflow on the run.
   cards share the cross-PR-confirmation move; this one applies
   it for my own post-push decision, the sibling applies it
   inside a comment that helps the maintainer make theirs.
+- [An advisory-scan check reddens on the calendar, not your diff](advisory-scans-redden-on-the-calendar.md)
+  is the temporal sibling. This card compares neighbor PRs at one
+  moment; that one compares a single PR against an external
+  advisory clock. Reach for it when the failing job is a
+  dependency or vulnerability scanner rather than a flaky shard.
