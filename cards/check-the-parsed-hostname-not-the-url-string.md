@@ -125,11 +125,13 @@ correctly, Bypass risk) plus the full parsed-component table.
 
 The engine was validated by extracting it into a Node VM and cross-
 checking against Node's own `URL` (the same WHATWG implementation the
-browser ships) across 11 adversarial samples, all four IPv4 notations,
-punycode, trailing dots, and every allowlist branch: 119 assertions, zero
-mismatches. The validation strategy is the card in one move — the tool's
-claim is "trust the platform parser, not your string intuition," and the
-test proves it by checking the tool against the platform parser.
+browser ships) across 20 adversarial samples, the IPv4 notations (decimal,
+octal, hex, short), IPv6 literals, punycode, trailing dots, and every
+allowlist branch: 86 assertions, zero mismatches (committed as `test.mjs`,
+run with `node test.mjs`). The validation strategy is the card in one
+move — the tool's claim is "trust the platform parser, not your string
+intuition," and the test proves it by checking the tool against the
+platform parser.
 
 One catch from building it: my own first test asserted that
 `https://example.com\@evil.example.net/` resolves to `evil.example.net`.
