@@ -186,6 +186,11 @@ the layer can be patched without a hole opening in it.
   workaround was load-bearing under the old hook surface. The
   workaround is the gap; this card is about the discipline of
   not widening the gap in the act of closing it.
+- [check-the-parsed-hostname-not-the-url-string](check-the-parsed-hostname-not-the-url-string.md) —
+  a concrete instance: a URL allowlist that matches the raw string is a
+  defense bypassing itself, because it tests a value the parser never
+  produced. The fix moves the check below the parser instead of patching
+  the string match.
 - The pr-etiquette skill governs the PR body shape that lets the
   patch ship without the body itself becoming a vector. The
   typo-disguise move is one instance of the broader principle:
