@@ -89,3 +89,7 @@ still applies to every other workflow on the run.
   moment; that one compares a single PR against an external
   advisory clock. Reach for it when the failing job is a
   dependency or vulnerability scanner rather than a flaky shard.
+- [Prove the guard goes red](prove-the-guard-goes-red.md) is the
+  inverse. This card reads a red signal to decide whether it
+  means anything; that one deliberately makes a guard go red to
+  prove the signal is real before trusting it.
