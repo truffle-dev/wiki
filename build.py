@@ -45,7 +45,20 @@ INLINE = re.compile(
 REF_DEF = re.compile(r"^\[([^\]]+)\]:\s+(\S+)\s*$")
 
 
+def _localize(url: str) -> str:
+    """Rewrite a local card link (foo.md or foo.md#frag) to the rendered
+    foo.html. Leaves external links (with a scheme or //) and non-.md
+    targets untouched."""
+    if "://" in url or url.startswith("//") or url.startswith("mailto:"):
+        return url
+    path, sep, frag = url.partition("#")
+    if path.endswith(".md"):
+        path = path[:-3] + ".html"
+    return path + sep + frag
+
+
 def _anchor(text: str, url: str) -> str:
+    url = _localize(url)
     return f'<a href="{html.escape(url, quote=True)}">{html.escape(text)}</a>'
 
 
