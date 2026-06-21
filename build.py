@@ -37,12 +37,24 @@ INLINE = re.compile(
     r"|(\*\*[^*\n]+\*\*)"                       # 2 bold
     r"|(\*[^*\n]+\*)"                           # 3 italic *
     r"|(_[^_\n]+_)"                             # 4 italic _
-    r"|(\[[^\]]+\]\([^)]+\))"                   # 5 link
+    r"|(\[[^\]]+\]\([^)]+\))"                   # 5 inline link [text](url)
+    r"|(\[[^\]]+\]\[[^\]]*\])"                  # 6 reference link [text][label]
 )
 
+# A link-reference definition on its own line: [label]: https://...
+REF_DEF = re.compile(r"^\[([^\]]+)\]:\s+(\S+)\s*$")
 
-def render_inline(line: str) -> str:
-    """Render inline markdown to HTML, escaping non-markup."""
+
+def _anchor(text: str, url: str) -> str:
+    return f'<a href="{html.escape(url, quote=True)}">{html.escape(text)}</a>'
+
+
+def render_inline(line: str, refs: dict[str, str] | None = None) -> str:
+    """Render inline markdown to HTML, escaping non-markup.
+
+    refs maps lowercased link labels to URLs, for reference-style links.
+    """
+    refs = refs or {}
     out = []
     last = 0
     for m in INLINE.finditer(line):
@@ -58,12 +70,19 @@ def render_inline(line: str) -> str:
             out.append(f"<em>{html.escape(token[1:-1])}</em>")
         elif token.startswith("["):
             text_end = token.index("]")
-            url_start = token.index("(", text_end)
             text = token[1:text_end]
-            url = token[url_start + 1:-1]
-            out.append(
-                f'<a href="{html.escape(url, quote=True)}">{html.escape(text)}</a>'
-            )
+            if token[text_end + 1] == "(":
+                # inline link [text](url)
+                url = token[text_end + 2:-1]
+                out.append(_anchor(text, url))
+            else:
+                # reference link [text][label]; collapsed [text][] uses text as label
+                label = token[text_end + 2:-1].strip() or text
+                url = refs.get(label.lower())
+                if url:
+                    out.append(_anchor(text, url))
+                else:
+                    out.append(html.escape(token))  # unresolved: leave literal
         last = m.end()
     out.append(html.escape(line[last:]))
     return "".join(out)
@@ -76,6 +95,24 @@ def render_card(md: str) -> tuple[str, str, str]:
     if lines and lines[0].startswith("# "):
         title = lines[0][2:].strip()
         lines = lines[1:]
+
+    # Pre-pass: collect link-reference definitions and drop those lines so
+    # they never render as paragraph text. Labels are matched case-insensitively.
+    refs: dict[str, str] = {}
+    kept = []
+    in_code_scan = False
+    for raw in lines:
+        if raw.lstrip().startswith("```"):
+            in_code_scan = not in_code_scan
+            kept.append(raw)
+            continue
+        if not in_code_scan:
+            d = REF_DEF.match(raw.strip())
+            if d:
+                refs[d.group(1).lower()] = d.group(2)
+                continue
+        kept.append(raw)
+    lines = kept
 
     body = []
     paragraph = []
@@ -90,7 +127,7 @@ def render_card(md: str) -> tuple[str, str, str]:
         if paragraph:
             text = " ".join(paragraph).strip()
             if text:
-                body.append(f"<p>{render_inline(text)}</p>")
+                body.append(f"<p>{render_inline(text, refs)}</p>")
                 if not first_para_text:
                     first_para_text = text
             paragraph.clear()
@@ -99,7 +136,7 @@ def render_card(md: str) -> tuple[str, str, str]:
         if list_item:
             text = " ".join(list_item).strip()
             if text:
-                body.append(f"<li>{render_inline(text)}</li>")
+                body.append(f"<li>{render_inline(text, refs)}</li>")
             list_item.clear()
 
     def close_list():
@@ -138,13 +175,13 @@ def render_card(md: str) -> tuple[str, str, str]:
             flush_paragraph()
             close_list()
             level = len(h.group(1))
-            body.append(f"<h{level}>{render_inline(h.group(2))}</h{level}>")
+            body.append(f"<h{level}>{render_inline(h.group(2), refs)}</h{level}>")
             continue
 
         if line.startswith("> "):
             flush_paragraph()
             close_list()
-            body.append(f"<blockquote>{render_inline(line[2:])}</blockquote>")
+            body.append(f"<blockquote>{render_inline(line[2:], refs)}</blockquote>")
             continue
 
         ol_m = re.match(r"^(\d+)\.\s+(.*)$", line)
