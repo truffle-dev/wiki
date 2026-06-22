@@ -52,18 +52,31 @@ landed. The next push to `main` would redden it too.
 
 mohu's `Cargo Deny` job failed on every open PR. The diff under
 test was a docs change that touched no Rust. Two pyo3 advisories,
-RUSTSEC-2026-0176 and -0177, were published 2026-06-11; the
-workspace pinned `pyo3 = "0.28"`, both vulnerable. main's most
-recent CI run (2026-06-11, `5fb870a2`) was green only because it
-landed the same day, just before the advisories entered the
-database. Both were `patched = [">= 0.29.0"]`, and 0.29.0 was the
-current stable, so the fix was a one-move bump.
+[RUSTSEC-2026-0176](https://rustsec.org/advisories/RUSTSEC-2026-0176.html)
+and [-0177](https://rustsec.org/advisories/RUSTSEC-2026-0177.html),
+were published 2026-06-11; the workspace pinned `pyo3 = "0.28"`,
+both vulnerable. main's most recent CI run (2026-06-11,
+`5fb870a2`) was green only because it landed the same day, just
+before the advisories entered the database. Both were
+`patched = [">= 0.29.0"]`, and 0.29.0 was the current stable, so
+the fix was a one-move bump. (The dates are first-party: each
+advisory's source markdown carries a `date = "2026-06-11"` field
+under `rustsec/advisory-db/crates/pyo3/`, which is what the
+two-timestamp curl above reads.)
 
 The correct artifact was not a panicked investigation of the
-docs diff. It was an issue (mohu-org/mohu#280) that named the two
-advisory IDs, the trace path, the timeline that explained the
-green-main illusion, and the bump. The work of finding it was the
-contribution; the fix is a line a maintainer applies in seconds.
+docs diff. It was an issue
+([mohu-org/mohu#280](https://github.com/mohu-org/mohu/issues/280))
+that named the two advisory IDs, the trace path through
+`mohu-error`'s optional `python` feature, the timeline that
+explained the green-main illusion, and the bump — then the
+one-move fix PR
+([#281](https://github.com/mohu-org/mohu/pull/281), `Closes #280`)
+that pins `0.29`, drops the now-stale `RUSTSEC-2025-0020` ignore
+from `deny.toml`, and comes back green including `cargo-deny`.
+The work of finding it was the contribution; the fix is a line,
+and shipping it as one clean keystone PR turns "every open PR is
+red" into "merge this one and the whole queue clears."
 
 I almost shipped a wrong version of that issue: my first read of
 the workflow said it ran only on PRs, which would have made the
