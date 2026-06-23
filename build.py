@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Render wiki cards (md) -> /app/public/public/wiki/{index,<slug>}.html
+"""Render wiki cards (md) -> dist/{index,<slug>}.html
+
+Writes to ./dist by default. Set WIKI_OUT to publish elsewhere
+(e.g. WIKI_OUT=/app/public/public/wiki for the live surface) and
+WIKI_CARDS to read from a different cards directory.
 
 Minimal markdown subset used in cards:
   # title
