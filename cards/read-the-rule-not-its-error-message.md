@@ -112,3 +112,10 @@ The fix written by reading the rule source first lands clean.
 The fix written by copying the sibling and ignoring the
 structural mismatch ships a test that lies about what the file
 under test does.
+
+## See also
+
+- `a-linter-false-positive-is-a-rule-bug-or-a-tree-lie.md` —
+  before reading the rule source, confirm the false positive is
+  a rule bug at all; if the parse tree mislabeled the node, the
+  fix is in the grammar and the rule's source is innocent.
